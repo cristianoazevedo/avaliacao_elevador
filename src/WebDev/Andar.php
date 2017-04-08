@@ -10,10 +10,7 @@ class Andar implements \SplObserver
      * @var integer
      */
     private $posicao;
-    /**
-     * @var integer
-     */
-    private $posicaoElevador;
+    use Notificacao;
 
     public function __construct($posicao)
     {
@@ -31,21 +28,5 @@ class Andar implements \SplObserver
     public function getPosicao()
     {
         return $this->posicao;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPosicaoElevador()
-    {
-        return $this->posicaoElevador;
-    }
-
-    /**
-     * @param int $posicaoElevador
-     */
-    public function setPosicaoElevador($posicaoElevador)
-    {
-        $this->posicaoElevador = $posicaoElevador;
     }
 }
