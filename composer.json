@@ -1,0 +1,23 @@
+{
+  "name": "exercicio_elevador/Webdev",
+  "description": "Trabalho de Avaliação - Elevador",
+  "authors": [
+    {
+      "name": "Cristiano Azevedo",
+      "email": "cristianodasilva.azevedo@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/PHPUnit": "5.7.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "WebDev\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "WebDevTest\\": "tests/"
+    }
+  }
+}
