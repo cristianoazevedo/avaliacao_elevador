@@ -4,4 +4,4 @@ composer install
 
 mkdir codecoverage
 
-phpunit --coverage-html codecoverage whitelist .
+phpunit tests --coverage-html codecoverage whitelist .
