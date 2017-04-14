@@ -1,14 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: UniCesumar
- * Date: 08/04/2017
- * Time: 15:42
+ * @author Cristiano Azevedo <cristianodasilva.azevedo@gmail.com>
  */
 
 namespace WebDev;
 
-
+/**
+ * Class Notificacao
+ *
+ * @package WebDev
+ */
 trait Notificacao
 {
     /**
