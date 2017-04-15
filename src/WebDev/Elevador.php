@@ -94,28 +94,38 @@ class Elevador implements \SplSubject
      */
     public function getMudancasDeEstados()
     {
+        print "===================== INÍCIO ======================== \n";
         $pessoa = current($this->pessoas);
         /* @var $pessoa \WebDev\Pessoa */
 
         $andar = current($this->andares);
         /* @var $andar \WebDev\Andar */
 
-        $this->estados[] = sprintf('Pessoa está no %so andar. Elevador está no %so andar.',
-            $pessoa->getAndar()->getPosicao(), $this->getPosicaoElevador());
-        $this->estados[] = sprintf('Pessoa chama elevador. Elevador está no %so andar.', $this->getPosicaoElevador());
+
+        $this->setEstadoDoElevador(sprintf('Pessoa está no %so andar. Elevador está no %so andar.',
+            $pessoa->getAndar()->getPosicao(), $this->getPosicaoElevador()));
+        $this->estados[] = $this->getEstadoDoElevador();
+
+        $this->setEstadoDoElevador(sprintf('Pessoa chama elevador. Elevador está no %so andar.',
+            $this->getPosicaoElevador()));
+        $this->estados[] = $this->getEstadoDoElevador();
 
         if ($andar->getPosicao() > $pessoa->getAndar()->getPosicao()) {
             for ($i = $andar->getPosicao(); $i >= $pessoa->getAndar()->getPosicao(); $i--) {
                 $novoAndar = new \WebDev\Andar($i);
                 $this->attach($novoAndar);
-                $this->estados[] = sprintf('Pessoa está no %so andar. Elevador está no %so andar.',
-                    $pessoa->getAndar()->getPosicao(), $this->getPosicaoElevador());
+                $this->setEstadoDoElevador(sprintf('Pessoa está no %so andar. Elevador está no %so andar.',
+                    $pessoa->getAndar()->getPosicao(), $this->getPosicaoElevador()));
+                $this->estados[] = $this->getEstadoDoElevador();
 
                 if ($i == $pessoa->getAndar()->getPosicao()) {
-                    $this->estados[] = sprintf('Pessoa entra no elevador. Elevador está no %so andar.',
-                        $this->getPosicaoElevador());
-                    $this->estados[] = sprintf('Pessoa aperta %so andar. Elevador está no %so andar.',
-                        $pessoa->getAndarDesejado()->getPosicao(), $this->getPosicaoElevador());
+                    $this->setEstadoDoElevador(sprintf('Pessoa entra no elevador. Elevador está no %so andar.',
+                        $this->getPosicaoElevador()));
+                    $this->estados[] = $this->getEstadoDoElevador();
+
+                    $this->setEstadoDoElevador(sprintf('Pessoa aperta %so andar. Elevador está no %so andar.',
+                        $pessoa->getAndarDesejado()->getPosicao(), $this->getPosicaoElevador()));
+                    $this->estados[] = $this->getEstadoDoElevador();
 
                     if ($pessoa->getAndarDesejado()->getPosicao() < $i) {
                         $this->desce($i - 1, $pessoa->getAndarDesejado()->getPosicao());
@@ -132,14 +142,18 @@ class Elevador implements \SplSubject
             for ($i = $andar->getPosicao(); $i <= $pessoa->getAndar()->getPosicao(); $i++) {
                 $novoAndar = new \WebDev\Andar($i);
                 $this->attach($novoAndar);
-                $this->estados[] = sprintf('Pessoa está no %so andar. Elevador está no %so andar.',
-                    $pessoa->getAndar()->getPosicao(), $this->getPosicaoElevador());
+                $this->setEstadoDoElevador(sprintf('Pessoa está no %so andar. Elevador está no %so andar.',
+                    $pessoa->getAndar()->getPosicao(), $this->getPosicaoElevador()));
+                $this->estados[] = $this->getEstadoDoElevador();
 
                 if ($i == $pessoa->getAndar()->getPosicao()) {
-                    $this->estados[] = sprintf('Pessoa entra no elevador. Elevador está no %so andar.',
-                        $this->getPosicaoElevador());
-                    $this->estados[] = sprintf('Pessoa aperta %so andar. Elevador está no %so andar.',
-                        $pessoa->getAndarDesejado()->getPosicao(), $this->getPosicaoElevador());
+                    $this->setEstadoDoElevador(sprintf('Pessoa entra no elevador. Elevador está no %so andar.',
+                        $this->getPosicaoElevador()));
+                    $this->estados[] = $this->getEstadoDoElevador();
+
+                    $this->setEstadoDoElevador(sprintf('Pessoa aperta %so andar. Elevador está no %so andar.',
+                        $pessoa->getAndarDesejado()->getPosicao(), $this->getPosicaoElevador()));
+                    $this->estados[] = $this->getEstadoDoElevador();
 
                     if ($pessoa->getAndarDesejado()->getPosicao() < $i) {
                         $this->desce($i - 1, $pessoa->getAndarDesejado()->getPosicao());
@@ -153,10 +167,13 @@ class Elevador implements \SplSubject
         }
 
         if ($andar->getPosicao() == $pessoa->getAndar()->getPosicao()) {
-            $this->estados[] = sprintf('Pessoa entra no elevador. Elevador está no %so andar.',
-                $this->getPosicaoElevador());
-            $this->estados[] = sprintf('Pessoa aperta %so andar. Elevador está no %so andar.',
-                $pessoa->getAndarDesejado()->getPosicao(), $this->getPosicaoElevador());
+            $this->setEstadoDoElevador(sprintf('Pessoa entra no elevador. Elevador está no %so andar.',
+                $this->getPosicaoElevador()));
+            $this->estados[] = $this->getEstadoDoElevador();
+
+            $this->setEstadoDoElevador(sprintf('Pessoa aperta %so andar. Elevador está no %so andar.',
+                $pessoa->getAndarDesejado()->getPosicao(), $this->getPosicaoElevador()));
+            $this->estados[] = $this->getEstadoDoElevador();
 
             if ($pessoa->getAndarDesejado()->getPosicao() < $andar->getPosicao()) {
                 $this->desce($andar->getPosicao() - 1, $pessoa->getAndarDesejado()->getPosicao());
@@ -167,6 +184,7 @@ class Elevador implements \SplSubject
             }
         }
 
+        print "===================== FIM =========================== \n\n";
         return $this;
     }
 
@@ -180,14 +198,18 @@ class Elevador implements \SplSubject
         for ($i = $inicio; $i <= $fim; $i++) {
             $novoAndar = new \WebDev\Andar($i);
             $this->attach($novoAndar);
-            $this->estados[] = sprintf('Pessoa está no elevador. Elevador está no %so andar.',
-                $this->getPosicaoElevador());
+            $this->setEstadoDoElevador(sprintf('Pessoa está no elevador. Elevador está no %so andar.',
+                $this->getPosicaoElevador()));
+            $this->estados[] = $this->getEstadoDoElevador();
 
             if ($fim == $i) {
-                $this->estados[] = sprintf('Pessoa sai do elevador. Elevador está no %so andar.',
-                    $this->getPosicaoElevador());
-                $this->estados[] = sprintf('Pessoa está no %so andar. Elevador está no %so andar.', $i,
-                    $this->getPosicaoElevador());
+                $this->setEstadoDoElevador(sprintf('Pessoa sai do elevador. Elevador está no %so andar.',
+                    $this->getPosicaoElevador()));
+                $this->estados[] = $this->getEstadoDoElevador();
+
+                $this->setEstadoDoElevador(sprintf('Pessoa está no %so andar. Elevador está no %so andar.', $i,
+                    $this->getPosicaoElevador()));
+                $this->estados[] = $this->getEstadoDoElevador();
             }
         }
     }
@@ -202,14 +224,18 @@ class Elevador implements \SplSubject
         for ($i = $inicio; $i >= $fim; $i--) {
             $novoAndar = new \WebDev\Andar($i);
             $this->attach($novoAndar);
-            $this->estados[] = sprintf('Pessoa está no elevador. Elevador está no %so andar.',
-                $this->getPosicaoElevador());
+            $this->setEstadoDoElevador(sprintf('Pessoa está no elevador. Elevador está no %so andar.',
+                $this->getPosicaoElevador()));
+            $this->estados[] = $this->getEstadoDoElevador();
 
             if ($fim == $i) {
-                $this->estados[] = sprintf('Pessoa sai do elevador. Elevador está no %so andar.',
-                    $this->getPosicaoElevador());
-                $this->estados[] = sprintf('Pessoa está no %so andar. Elevador está no %so andar.', $i,
-                    $this->getPosicaoElevador());
+                $this->setEstadoDoElevador(sprintf('Pessoa sai do elevador. Elevador está no %so andar.',
+                    $this->getPosicaoElevador()));
+                $this->estados[] = $this->getEstadoDoElevador();
+
+                $this->setEstadoDoElevador(sprintf('Pessoa está no %so andar. Elevador está no %so andar.', $i,
+                    $this->getPosicaoElevador()));
+                $this->estados[] = $this->getEstadoDoElevador();
             }
         }
     }

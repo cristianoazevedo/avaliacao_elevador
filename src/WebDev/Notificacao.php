@@ -18,6 +18,11 @@ trait Notificacao
     private $posicaoElevador;
 
     /**
+     * @var string
+     */
+    private $estado;
+
+    /**
      * @return int
      */
     public function getPosicaoElevador()
@@ -31,5 +36,16 @@ trait Notificacao
     public function setPosicaoElevador($posicaoElevador)
     {
         $this->posicaoElevador = $posicaoElevador;
+    }
+
+    public function setEstadoDoElevador($estado)
+    {
+        print $estado . PHP_EOL;
+        $this->estado = $estado;
+    }
+
+    public function getEstadoDoElevador()
+    {
+        return $this->estado;
     }
 }
